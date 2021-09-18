@@ -1,7 +1,7 @@
 from django.db.models.fields import CharField
 from django.shortcuts import render
 from .models import Posts
-# Create your views here.
+# Create your views here
 
 def home(request):
     return render(request, 'editor/home.html',{
