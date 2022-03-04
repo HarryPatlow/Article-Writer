@@ -1,3 +1,15 @@
 body {
     background-color: rgb(239, 246, 253);
 }
+
+#main_btn {
+    width: 100px;
+}
+.navbar {
+    background-color: #3DDC84;
+}
+
+.btn-primary {
+    background-color: #3DDC84;
+    color: black;
+}
