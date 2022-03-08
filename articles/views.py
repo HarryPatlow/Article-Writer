@@ -13,3 +13,6 @@ def article(request, article_id):
     return render(request, "articles/article.html",{
         "article":Article.objects.get(pk=article_id)
     })
+
+def add(request):
+    return render(request, "articles/editor.html")

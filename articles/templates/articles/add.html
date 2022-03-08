@@ -1,0 +1,35 @@
+{% extends 'articles/layout.html' %}
+{% load static %}
+{% block title %}
+    New Post
+{% endblock %}
+{% block body %}
+    
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <style>
+        #new:hover{
+            transform: scale(1.03);
+        }
+    </style>
+    <nav class="navbar navbar-light" style="background-color: #ffffff; padding: 15px 20px 15px 20px; border: 2px solid rgb(245, 245, 245);">
+        <div class="container-fluid">
+            <h1 class="navbar-brand" style="color: #575757; font-size: 27px; text-transform: capitalize;"  contenteditable="true">Post Title</h1>
+            <div>
+                <a href="{% url 'index' %}" style="text-decoration: none;">
+                    <button class="btn btn-danger" id = "new" style="border: none; border-radius: 20px; padding: 10px 20px 10px 20px;">
+                        Cancel
+                    </button>
+                </a>
+                <button class="btn btn-primary" id="new" style="border: none; color: black; border-radius: 20px; padding: 10px 20px 10px 20px;">
+                    Publish
+                </button>
+            </div>
+          </div>
+     </nav>
+     <div style="display:flex; justify-content: center; margin-top: 100px;">
+        {% block editor %}
+        {% endblock %}
+     </div>
+        
+
+{% endblock %}
