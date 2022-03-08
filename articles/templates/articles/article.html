@@ -1,0 +1,48 @@
+{% extends 'articles/layout.html' %} 
+{% load static %} 
+
+{% block title %}{{article.title }}{% endblock %} 
+{% block body %}
+
+    <style>
+        .blog-content{
+            margin:0px 50px 0px 50px;
+            padding:80px 150px 20px 150px;
+        }
+        body{
+            background-color:rgb(250, 250, 250)
+        }
+        .card-body {
+            background-color: white;
+            border-radius: 20px;
+        }
+        .card-text{
+            color: rgb(71, 71, 71);
+        }
+    </style>
+
+    <div style="background-color:black;height: 450px;">
+        <div style="background-image: url({{ article.thumbnail.url }}); background-repeat: no-repeat; background-size:100% 450px; width:100%, height:450px; background-position:center center; background-size:cover; opacity:0.3">
+            <div style="height:450px; display:flex; justify-content:center; padding-top:205px">
+            
+        </div>
+    </div>
+    <h1 style="text-transform:uppercase; color:white; top:-55%; position: relative; text-align: center; font-weight:600">{{ article.title }}</h1>
+    <h3 style="color:white; top:-55%; position: relative; text-align: right; margin-right:20%; opacity:0.5; font-size:20px; margin-top:20px; font-weight:300">- By {{article.author}}</h3>    
+
+    <div class="container">
+        <div class="row">
+          <div class="" style="margin:0 auto">
+            <div class="card-body blog-content">
+              <h1 style="color:#34ac6a">{{ article.title }}</h1>
+              <p class=" text-muted">{{ article.author }} | {{ article.date_modified }}</p>
+              <div style="height: 60px;"></div>
+              <p class="card-text ">{{ article.content | safe }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    
+
+{% endblock %}

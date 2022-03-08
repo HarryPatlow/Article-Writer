@@ -6,5 +6,10 @@ from .models import Article
 
 def index(request):
     return render(request, 'articles/index.html',{
-        "article":Article.objects.all()
+        "articles":Article.objects.all()
+    })
+
+def article(request, article_id):
+    return render(request, "articles/article.html",{
+        "article":Article.objects.get(pk=article_id)
     })

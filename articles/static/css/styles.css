@@ -12,4 +12,29 @@
 
 .card {
     border: none !important;
+    height: 360px !important;
+}
+
+#cover {
+    width: 100%;
+}
+#body-light {
+    background-color: rgb(239, 246, 253);
+}
+
+#subtitle-home-light{
+    color: rgb(32, 33, 36);
+}
+
+#title-home-light{
+    font-size: 100px;
+    color: rgb(18, 19, 20);
+}
+
+#container-light {
+    border-radius: 20px;
+}
+
+#card-title-light {
+    font-size: 30px;
 }
