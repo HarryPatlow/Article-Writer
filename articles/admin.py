@@ -9,7 +9,8 @@ from django.utils.html import format_html
 class ArticleAd(admin.ModelAdmin):
 
     def image_tag(self, obj):
-        return format_html('<img src="{}" style="width:70px; height:80px; object-fit:cover" />'.format(obj.thumbnail.url))
+        if obj.thumbnail:
+            return format_html('<img src="{}" style="width:70px; height:80px; object-fit:cover" />'.format(obj.thumbnail.url))
 
     image_tag.short_description = 'Image'
 

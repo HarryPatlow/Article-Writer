@@ -3,33 +3,317 @@
 {% block title %}
     New Post
 {% endblock %}
-{% block body %}
-    
+{% block body %} 
+    <style>
+      .popup{
+        padding: 0px 0px;
+        display: none;
+        position: fixed; /* Stay in place */
+        z-index: 1; /* Sit on top */
+        left: 0;
+        top: 0;
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+        overflow: hidden; /* Enable scroll if needed */
+        background-color: rgb(0,0,0); /* Fallback color */
+        background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+      }
+      .popup-content::-webkit-scrollbar {
+        display: none;
+      }
+
+      .popup-content{
+        background-color: white;
+        margin: 5% 15% 0% 15%;
+        height: 680px;
+        border-radius: 30px;
+        overflow: auto;
+      }
+
+      .popup-form {
+        padding: 5% 5% 2% 25%;
+      }
+    </style>
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
     <style>
         #new:hover{
             transform: scale(1.03);
         }
     </style>
+    <div>
     <nav class="navbar navbar-light" style="background-color: #ffffff; padding: 15px 20px 15px 20px; border: 2px solid rgb(245, 245, 245);">
         <div class="container-fluid">
-            <h1 class="navbar-brand" style="color: #575757; font-size: 27px; text-transform: capitalize;"  contenteditable="true">Post Title</h1>
+            <h1 class="navbar-brand" style="color: #575757; font-size: 27px; text-transform: capitalize;" id="post_title" contenteditable="true">Post Title</h1>
             <div>
                 <a href="{% url 'index' %}" style="text-decoration: none;">
-                    <button class="btn btn-danger" id = "new" style="border: none; border-radius: 20px; padding: 10px 20px 10px 20px;">
+                    <button class="btn btn-danger" id = "cencel" style="border: none; border-radius: 20px; padding: 10px 20px 10px 20px;">
                         Cancel
                     </button>
                 </a>
-                <button class="btn btn-primary" id="new" style="border: none; color: black; border-radius: 20px; padding: 10px 20px 10px 20px;">
+                <button class="btn btn-primary" id="pub" style="border: none; color: black; border-radius: 20px; padding: 10px 20px 10px 20px;">
                     Publish
                 </button>
             </div>
           </div>
      </nav>
      <div style="display:flex; justify-content: center; margin-top: 100px;">
-        {% block editor %}
-        {% endblock %}
-     </div>
         
+<link class="jsbin" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
+<script class="jsbin" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+<script class="jsbin" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.0/jquery-ui.min.js"></script>
+<script type="text/javascript">
 
+var oDoc, sDefTxt;
+
+function initDoc() {
+  oDoc = document.getElementById("textBox");
+  sDefTxt = oDoc.innerHTML;
+  if (document.compForm.switchMode.checked) { setDocMode(true); }
+}
+
+function formatDoc(sCmd, sValue) {
+  if (validateMode()) { document.execCommand(sCmd, false, sValue); oDoc.focus(); }
+}
+
+function validateMode() {
+  if (!document.compForm.switchMode.checked) { return true ; }
+  alert("Uncheck \"Show HTML\".");
+  oDoc.focus();
+  return false;
+}
+
+function setDocMode(bToSource) {
+  var oContent;
+  if (bToSource) {
+    oContent = document.createTextNode(oDoc.innerHTML);
+    oDoc.innerHTML = "";
+    var oPre = document.createElement("pre");
+    oDoc.contentEditable = false;
+    oPre.id = "sourceText";
+    oPre.contentEditable = true;
+    oPre.appendChild(oContent);
+    oDoc.appendChild(oPre);
+    document.execCommand("defaultParagraphSeparator", false, "div");
+  } else {
+    if (document.all) {
+      oDoc.innerHTML = oDoc.innerText;
+    } else {
+      oContent = document.createRange();
+      oContent.selectNodeContents(oDoc.firstChild);
+      oDoc.innerHTML = oContent.toString();
+    }
+    oDoc.contentEditable = true;
+  }
+  oDoc.focus();
+}
+
+function printDoc() {
+  if (!validateMode()) { return; }
+  var oPrintWin = window.open("","_blank","width=450,height=470,left=400,top=100,menubar=yes,toolbar=no,location=no,scrollbars=yes");
+  oPrintWin.document.open();
+  oPrintWin.document.write("<!doctype html><html><head><title>Print<\/title><\/head><body onload=\"print();\">" + oDoc.innerHTML + "<\/body><\/html>");
+  oPrintWin.document.close();
+}
+</script>
+<style type="text/css">
+.intLink { cursor: pointer; }
+img.intLink { border: 0; }
+#toolBar1 select { font-size:10px; }
+#textBox {
+  width: 150vh;
+  min-height: 50vh;
+  border: 1px #ebeaea solid;
+  padding: 12px;
+  overflow: hidden;
+  border-radius: 10px;
+}
+#textBox #sourceText {
+  padding: 0;
+  margin: 0;
+  min-width: 498px;
+  min-height: 200px;
+}
+#editMode label { cursor: pointer; }
+
+select{
+  background-color: #3DDC84;
+  color: black;
+  width: 19%;
+  text-align: center;
+  border: none;
+  border-radius: 20px;
+  appearance: none;
+  text-transform: capitalize;
+  padding: 10px 0px;
+  margin: 0px 5px 20px 5px;
+  font-size: 15px !important;
+}
+#toolBar1 {
+  display: flex;
+  justify-content: center;
+}
+#toolBar2{
+  display: flex;
+  justify-content: center;
+}
+#toolBar2 img{
+  border-radius: 5px;
+  height: 30px;
+  width: auto;
+  margin: 20px 5px 20px 5px;
+
+}
+#toolBar2 img:hover{
+  transform: scale(1.1);
+
+}
+.image {
+  margin: 80px 0px;
+}
+input[type=file]::file-selector-button {
+  border: none;
+  padding: 7px;
+  border-radius: 5px;
+  background-color: #3DDC84 !important;
+  color: black !important;
+}
+
+</style>
+</head>
+<body onload="initDoc();">
+
+<form name="compForm" method="post" onsubmit="if(validateMode()){this.myDoc.value=oDoc.innerHTML;}">
+<input type="hidden" name="myDoc">
+<div id="toolBar1">
+<select onchange="formatDoc('formatblock',this[this.selectedIndex].value);this.selectedIndex=0;">
+<option selected>Formatting</option>
+<option value="h1">Title 1 &lt;h1&gt;</option>
+<option value="h2">Title 2 &lt;h2&gt;</option>
+<option value="h3">Title 3 &lt;h3&gt;</option>
+<option value="h4">Title 4 &lt;h4&gt;</option>
+<option value="h5">Title 5 &lt;h5&gt;</option>
+<option value="h6">Subtitle &lt;h6&gt;</option>
+<option value="p">Paragraph &lt;p&gt;</option>
+<option value="pre">Preformatted &lt;pre&gt;</option>
+</select>
+<select onchange="formatDoc('fontname',this[this.selectedIndex].value);this.selectedIndex=0;">
+<option class="heading" selected>Font</option>
+<option>Arial</option>
+<option>Arial Black</option>
+<option>Courier New</option>
+<option>Times New Roman</option>
+</select>
+<select onchange="formatDoc('fontsize',this[this.selectedIndex].value);this.selectedIndex=0;">
+<option class="heading" selected>Size</option>
+<option value="1">Very small</option>
+<option value="2">A bit small</option>
+<option value="3">Normal</option>
+<option value="4">Medium-large</option>
+<option value="5">Big</option>
+<option value="6">Very big</option>
+<option value="7">Maximum</option>
+</select>
+<select onchange="formatDoc('forecolor',this[this.selectedIndex].value);this.selectedIndex=0;">
+<option class="heading" selected>Color</option>
+<option value="red">Red</option>
+<option value="blue">Blue</option>
+<option value="green">Green</option>
+<option value="black">Black</option>
+</select>
+<select onchange="formatDoc('backcolor',this[this.selectedIndex].value);this.selectedIndex=0;">
+<option class="heading" selected>Background</option>
+<option value="white">White</option>
+<option value="green">Green</option>
+<option value="black">Black</option>
+</select>
+</div>
+<div id="toolBar2">
+<img class="intLink" title="Print" onclick="printDoc();" src="{% static 'imgs/icons/print.png' %}" />
+<img class="intLink" title="Undo" onclick="formatDoc('undo');" src="{% static 'imgs/icons/undo.png' %}" />
+<img class="intLink" title="Redo" onclick="formatDoc('redo');" src="{% static 'imgs/icons/redo.png' %}" />
+<img class="intLink" title="Remove formatting" onclick="formatDoc('removeFormat')" src="{% static 'imgs/icons/Aa.png' %}" />
+<img class="intLink" title="Bold" onclick="formatDoc('bold');" src="{% static 'imgs/icons/B.png' %}" />
+<img class="intLink" title="Italic" onclick="formatDoc('italic');" src="{% static 'imgs/icons/I.png' %}" />
+<img class="intLink" title="Underline" onclick="formatDoc('underline');" src="{% static 'imgs/icons/U.png' %}" />
+<img class="intLink" title="Left align" onclick="formatDoc('justifyleft');" src="{% static 'imgs/icons/left.png' %}" />
+<img class="intLink" title="Center align" onclick="formatDoc('justifycenter');" src="{% static 'imgs/icons/center.png' %}" />
+<img class="intLink" title="Right align" onclick="formatDoc('justifyright');" src="{% static 'imgs/icons/right.png' %}" />
+<img class="intLink" title="Numbered list" onclick="formatDoc('insertorderedlist');" src="{% static 'imgs/icons/numlist.png' %}" />
+<img class="intLink" title="Dotted list" onclick="formatDoc('insertunorderedlist');" src="{% static 'imgs/icons/bulllist.png' %}" />
+<img class="intLink" title="Quote" onclick="formatDoc('formatblock','blockquote');" src="{% static 'imgs/icons/quote.png' %}" />
+<img class="intLink" title="Delete indentation" onclick="formatDoc('outdent');" src="{% static 'imgs/icons/delind.png' %}" />
+<img class="intLink" title="Add indentation" onclick="formatDoc('indent');" src="{% static 'imgs/icons/addind.png' %}" />
+<img class="intLink" title="Hyperlink" onclick="var sLnk=prompt('Write the URL here','http:\/\/');if(sLnk&&sLnk!=''&&sLnk!='http://'){formatDoc('createlink',sLnk)}" src="{% static 'imgs/icons/link.png' %}" />
+<img class="intLink" title="Cut" onclick="formatDoc('cut');" src="{% static 'imgs/icons/cut.png' %}" />
+<img class="intLink" title="Copy" onclick="formatDoc('copy');" src="{% static 'imgs/icons/copy.png' %}" />
+<img class="intLink" title="Paste" onclick="formatDoc('paste');" src="{% static 'imgs/icons/paste.png' %}" />
+<img class="intLink" title="Clean" onclick="if(validateMode()&&confirm('Are you sure?')){oDoc.innerHTML=sDefTxt};" src="{% static 'imgs/icons/clear.png' %}" />
+</div>
+<div id="textBox" contenteditable="true"><p></p></div>
+<p id="editMode"><input type="checkbox" name="switchMode" id="switchBox" onchange="setDocMode(this.checked);" /> <label for="switchBox">Show HTML</label></p>
+
+
+
+<div class="popup">
+  <form method="post" enctype="multipart/form-data" action="{% url 'add' %}">
+    <div class="popup-content">
+      <div class="popup-form">
+        <h1 style="color: #2ea865;">Ready to get your post online!</h1>
+        <div class="image">
+          <img style="width: 500px; height: 333px; object-fit: cover;" id = "featimg2" src="{% static 'imgs/featured.jpeg' %}">
+          <br><br>
+        
+          
+          {% csrf_token %}
+                {{ form.as_p }}
+            <br>
+        
+      </div>
+      
+    </div>
+    <nav class="navbar navbar-light" style="background-color: #ffffff; padding: 15px 20px 15px 20px; border-top: 2px solid rgb(245, 245, 245); border-radius: 0px 0px 30px 30px;">
+      <div class="container-fluid">
+          <h1 class="navbar-brand" style="color: #575757; font-size: 27px; text-transform: capitalize;"></h1>
+          <div>
+              <button class="btn btn-danger" id = "popup-cancel" style="border: none; border-radius: 20px; padding: 10px 20px 10px 20px;">
+                  Cancel
+              </button>
+              <button class="btn btn-primary" id="new" style="border: none; color: black; border-radius: 20px; padding: 10px 20px 10px 20px;" type="submit">
+                  Publish
+              </button>
+          </div>
+        </div>
+   </nav>
+  </form>
+    
+</div>
+<script>
+  $("#id_thumbnail").change(function(e) {
+
+for (var i = 0; i < e.originalEvent.srcElement.files.length; i++) {
+    
+    var file = e.originalEvent.srcElement.files[i];
+    
+    var reader = new FileReader();
+    reader.onloadend = function() {
+         document.querySelector('#featimg2').src = reader.result;
+    }
+    reader.readAsDataURL(file);
+    $("input").after(img);
+}
+});
+</script>
+<script>
+    document.querySelector('#pub').onclick = ()=>{
+        document.querySelector('.popup').style.display = 'inline-block'
+
+        document.querySelector('#id_title').value = document.querySelector('#post_title').innerHTML
+        document.querySelector('#id_content').value = document.querySelector('#textBox').innerHTML
+        document.querySelector('#id_author').value = 'admin'
+    }
+    document.querySelector('#popup-cancel').onclick = ()=>{
+        document.querySelector('.popup').style.display = 'none'
+    }
+  
+</script>
 {% endblock %}

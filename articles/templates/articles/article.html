@@ -22,10 +22,15 @@
     </style>
 
     <div style="background-color:black;height: 450px;">
+        {% if article.thumbnail %}
         <div style="background-image: url({{ article.thumbnail.url }}); background-repeat: no-repeat; background-size:100% 450px; width:100%, height:450px; background-position:center center; background-size:cover; opacity:0.3">
-            <div style="height:450px; display:flex; justify-content:center; padding-top:205px">
-            
+            <div style="height:450px; display:flex; justify-content:center; padding-top:205px">          
         </div>
+        {% else %}
+        <div style="background-image: url({% static 'imgs/featured.jpeg' %}); background-repeat: no-repeat; background-size:100% 450px; width:100%, height:450px; background-position:center center; background-size:cover; opacity:0.3">
+            <div style="height:450px; display:flex; justify-content:center; padding-top:205px">          
+        </div>
+        {% endif %}
     </div>
     <h1 style="text-transform:uppercase; color:white; top:-55%; position: relative; text-align: center; font-weight:600">{{ article.title }}</h1>
     <h3 style="color:white; top:-55%; position: relative; text-align: right; margin-right:20%; opacity:0.5; font-size:20px; margin-top:20px; font-weight:300">- By {{article.author}}</h3>    
