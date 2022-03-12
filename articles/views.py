@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.core.files.storage import FileSystemStorage
 from django import forms
+from matplotlib.image import thumbnail
 
 from .models import Article
 # Create your views here.
@@ -8,7 +9,7 @@ from .models import Article
 class PublishForm(forms.ModelForm):
     class Meta:
         model = Article
-        fields = ('thumbnail', 'title', 'content', 'author')
+        fields = ('thumbnail','title', 'content', 'author')
 
 
 # class PublishForm(forms.Form):
@@ -29,15 +30,15 @@ def article(request, article_id):
     })
 
 
-# def add(request):
-# 	if request.method == "POST":
-# 		form = PublishForm(request.POST, request.FILES)
-# 		if form.is_valid():
-# 			form.save()
-# 		return redirect("index")
+def add(request):
+	if request.method == "POST":
+		form = PublishForm(request.POST, request.FILES)
+		if form.is_valid():
+			form.save()
+		return redirect("index")
 
-# 	form = PublishForm()
-# 	return render(request=request, template_name="articles/add.html", context={'form':form})
+	form = PublishForm()
+	return render(request=request, template_name="articles/add.html", context={'form':form})
 
 # def add(request):
 #     context = {}
@@ -61,15 +62,15 @@ def article(request, article_id):
 #     context['form']= form
 #     return render(request, "articles/add.html", context)
 
-def add(request):
+# def add(request):
   
-    if request.method == 'POST':
-        form = PublishForm(request.POST, request.FILES)
+#     if request.method == 'POST':
+#         form = PublishForm(request.POST, request.FILES)
   
-        if form.is_valid():
-            form.save()
-            return redirect('index')
-    else:
-        form = PublishForm()
-    return render(request, 'articles/add.html', {'form' : form})
+#         if form.is_valid():
+#             form.save()
+#             return redirect(request, 'articles/index.html')
+#     else:
+#         form = PublishForm()
+#     return render(request, 'articles/add.html', {'form' : form})
   
