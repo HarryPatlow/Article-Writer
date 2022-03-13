@@ -26,6 +26,10 @@
         <div style="background-image: url({{ article.thumbnail.url }}); background-repeat: no-repeat; background-size:100% 450px; width:100%, height:450px; background-position:center center; background-size:cover; opacity:0.3">
             <div style="height:450px; display:flex; justify-content:center; padding-top:205px">          
         </div>
+        {% elif article.thumbnail_url %}
+        <div style="background-image: url({{ article.thumbnail_url }}); background-repeat: no-repeat; background-size:100% 450px; width:100%, height:450px; background-position:center center; background-size:cover; opacity:0.3">
+            <div style="height:450px; display:flex; justify-content:center; padding-top:205px">          
+        </div>
         {% else %}
         <div style="background-image: url({% static 'imgs/featured.jpeg' %}); background-repeat: no-repeat; background-size:100% 450px; width:100%, height:450px; background-position:center center; background-size:cover; opacity:0.3">
             <div style="height:450px; display:flex; justify-content:center; padding-top:205px">          

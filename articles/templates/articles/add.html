@@ -255,7 +255,7 @@ input[type=file]::file-selector-button {
 
 
 <div class="popup">
-  <form method="post" enctype="multipart/form-data" action="{% url 'add' %}">
+  <form method="POST" enctype = "multipart/form-data" action="{% url 'add' %}">
     <div class="popup-content">
       <div class="popup-form">
         <h1 style="color: #2ea865;">Ready to get your post online!</h1>
@@ -264,7 +264,8 @@ input[type=file]::file-selector-button {
           <br><br>
         
           
-          {% csrf_token %}
+                {% csrf_token %}
+                {{ form.media }}
                 {{ form.as_p }}
             <br>
         
