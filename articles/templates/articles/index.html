@@ -1,5 +1,6 @@
 {% extends 'articles/layout.html' %}
 {% load static %}
+{% load humanize %}
 {% block title %}
     Home
 {% endblock %}
@@ -47,7 +48,7 @@
                   <p class="card-title-light" id ="card-title-light" style="font-size: 17px; font-weight: 700; text-transform: uppercase;">{{ article.title }}</p>
                   <div class="d-flex justify-content-between align-items-center">
                     <small class="text-muted">By {{ article.author }}</small>
-                    <small class="text-muted">{{ article.date_modified }}</small>
+                    <small class="text-muted">{{ article.date_modified|naturaltime }}</small>
                   </div>
                 </div>
               </div>
